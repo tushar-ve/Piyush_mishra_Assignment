@@ -7,4 +7,5 @@ urlpatterns = [
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('chat/', ChatView.as_view(), name='chat'),
+    path('chat-history/', ChatHistoryView.as_view(), name='chat_history')
 ]

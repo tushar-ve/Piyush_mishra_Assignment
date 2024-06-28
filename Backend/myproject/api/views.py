@@ -29,3 +29,12 @@ class ChatView(APIView):
             max_tokens=150
         )
         return Response({'response': response.choices[0].text.strip()}, status=status.HTTP_200_OK)
+
+class ChatHistoryView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        chats = Chat.objects.filter(user=request.user).order_by('-timestamp')
+        chat_history = [{"message": chat.message, "response": chat.response, "timestamp": chat.timestamp} for chat in chats]
+        return Response(chat_history, status=status.HTTP_200_OK)
